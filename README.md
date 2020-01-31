@@ -30,13 +30,48 @@ Edit this document to include your answers after each question. Make sure to lea
 
 1. Describe the biggest difference between `.forEach` & `.map`.
 
+`forEach` iterates through an array without returning anything, whereas `map` iterates through the array it was called on and returns a new array, with the same number of elements. This makes it so that other methods can be chained after a call to `map` but not after a call to `forEach` (because it doesn't return anything).
+
 2. What is the difference between a function and a method?
+
+A method is a kind of function, which is invoked as a property of an object. `this` in a method refers to the object preceding the `.`, so that a method can refer to the properties of the object that receives its function call. Functions in JavaScript are also objects with properties, but they are not implicitly bound to an object unless they are a property of that object.
 
 3. What is closure?
 
+Closure describes the way that a function "remembers" the environment in which it was defined, so that it has access to variables within its inner and outer lexical environments. In JavaScript, functions automatically create their own closure when they are created. For example:
+```
+function outer() {
+    const foo = 42;
+    return function inner() {
+        return foo;
+    }
+}
+const inner = outer();
+console.log(inner()); // 42
+```
+The `inner` function has access to `foo` even though `foo` is otherwise inaccessible from outside of the `outer` function. Variables in a function's closure are referenced from a hidden environment property on the function's prototype.
+
 4. Describe the four rules of the 'this' keyword.
 
+a. Window/Global Object Binding
+
+When invoked in the global scope, i.e., not bound to any other object, the `this` keyword refers to the `window` object in the browser and the `global` object in Node.
+
+b. Implicit Binding
+
+When calling a method on an object, `this` refers to the object preceding the dot before the method invocation. For example, when calling `foo.bar()` the value of `this` is `foo`. Arrow functions, however, are not implicitly bound, so if `foo.baz()` is an arrow function, `this` does not refer to `foo`.
+
+c. New Binding
+
+The `new` keyword creates and returns a new object from a constructor function, ignoring any value returned from the function body with the `return` keyword. `this` refers to the new object created from a constructor function. The new object is unique, existing in its own slot in memory.
+
+d. Explicit Binding
+
+The `call` and `apply` methods, when invoked on a function will explicitly bind the `this` parameter passed in as an argument, allowing us to override an object's implicitly bound `this` to any object.
+
 5. Why do we need super() in an extended class?
+
+When called within the constructor of an extended class, `super()` calls the constructor of its parent class, initializing `this` so that it inherits the properties and methods of the parent class. It must be called in order to access `this` and return from the constructor of an extended class.
 
 ## Project Set up
 
@@ -53,8 +88,8 @@ Follow these steps to set up and work on your project:
 
 Follow these steps for completing your project:
 
-- [ ] Submit a Pull-Request to merge <firstName-lastName> Branch into master (student's  Repo).
-- [ ] Add your team lead as a Reviewer on the Pull-request
+- [x] Submit a Pull-Request to merge <firstName-lastName> Branch into master (student's  Repo).
+- [x] Add your team lead as a Reviewer on the Pull-request
 - [ ] TL then will count the HW as done by  merging the branch back into master.
 
 
